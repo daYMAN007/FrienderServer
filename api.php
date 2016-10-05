@@ -1,14 +1,12 @@
 <?php
 require_once 'libary.php'; //todo pw dont work at all
 $myData = json_decode($_POST['myData'],true);
-print_r($myData);
+// $myData = array('action' => "Registrieren", 'BenPasswort' => "geheim", 'Benutzername' => "asdf", 'BenVorname' => "asdfasdf", 'BenNachname' => "Halsdjf", 'BenTelefonnummer' => "076 567 22 91");
 $action = $myData['action'];
-
 //Überprüfen, ob die eingegebenen Daten richtig sind
 switch ($action){
       case "Registrieren":
       $BenPasswort=hashpw($myData['BenPasswort']);
-      $BenPasswort=hashpw($myData['BenPasswortWiederholung'])
       $Benutzername=$myData['Benutzername'];
       $BenVorname=$myData['BenVorname'];
       $BenNachname=$myData['BenNachname'];
@@ -19,7 +17,7 @@ switch ($action){
       {
         echo "0";
       }
-      else if($BenVorname == null || $BenNachname ==  null || $BenTelefonnummer == null || $BenPasswort == null || $BenPasswortWiederholung == null)
+      else if($BenVorname == null || $BenNachname ==  null || $BenTelefonnummer == null || $BenPasswort == null)
       {
         echo "1";
       }

@@ -4,11 +4,11 @@ require_once 'dbconnect.php';
 mysqli_set_charset($db, 'utf8'); //nöd nötig wen nix mb4 (https://forums.digitalpoint.com/threads/mysql-collation-utf8-differences.2721197/)
 
 // Daten einfügen
-function Registrieren ($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort)
+function Registrieren ($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenPasswort)
 {
 global $db;
 //Tabelle füllen
-$sql = "INSERT INTO tbenutzer (BenutzerId, BenNickname, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime, BenPasswort) VALUES (NULL, '$Benutzername', '$BenVorname', '$BenNachname', '$BenTelefonnummer', '$BenLongitude', '$BenLatitude', '$BenGeoTime','$BenPasswort');";
+$sql = "INSERT INTO tbenutzer (BenutzerId, BenNickname, BenVorname, BenNachname, BenTelefonnummer, BenPasswort) VALUES (NULL, '$Benutzername', '$BenVorname', '$BenNachname', '$BenTelefonnummer','$BenPasswort');";
 $sql = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
 }
 function hashpw($password)
@@ -52,16 +52,6 @@ function DatenAuslesen ($BenutzerId)
   $BenLatitude = $user['BenLatitude'];
   $BenGeoTime = $user['BenGeoTime'];
   $BenPasswort = $user['BenPasswort'];
-}
-
-//Select um zu sehen, ob der Benutzername schon existiert
-function BenutzernameTesten ($Benutzername)
-{
-  global $db
-  $sql = "SELECT * FROM tbenutzer WHERE BenutzerName = '$BenutzerName';";
-  $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
-  $user = mysqli_fetch_assoc($result);
-  return($user);
 }
 
 
