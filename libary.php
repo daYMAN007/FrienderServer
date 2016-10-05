@@ -1,32 +1,39 @@
 <?php
-// btw i ha mi asi gfühlt wo i fascht alles glöscht ha
-//Verbindung zur Datenbank aufbauen //damian:delete da?
-$BenutzerId;
-$Benutzername;
-$BenVorname;
-$BenNachname;
-$BenTelefonnummer;
-$BenLongitude;
-$BenLatitude;
-$BenGeoTime;
-$BenPasswort;
-
+//Verbindung zur Datenbank aufbauen
 require_once 'dbconnect.php';
 mysqli_set_charset($db, 'utf8'); //nöd nötig wen nix mb4 (https://forums.digitalpoint.com/threads/mysql-collation-utf8-differences.2721197/)
 
 // Daten einfügen
-function DatenEinfuegen ($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort) //func name= Registrieren?
+function Registrieren ($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort)
 {
 global $db;
 //Tabelle füllen
 $sql = "INSERT INTO tbenutzer (BenutzerId, BenNickname, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime, BenPasswort) VALUES (NULL, '$Benutzername', '$BenVorname', '$BenNachname', '$BenTelefonnummer', '$BenLongitude', '$BenLatitude', '$BenGeoTime','$BenPasswort');";
 $sql = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
 }
+function hashpw($password)
+{
+  $salt="dsfsf";
+  $pwsaltedmd5 md5 ("rasmuslerdorf".$salt)."\n";
+  return sha($pwsaltedmd5);
 
+}
 // Daten auslesen
-DatenEinfuegen("Hanswurst","Peter","Hansel","sfdsd",5,3,"now()","");
-DatenAuslesen(1000);
-function DatenAuslesen ($BenutzerId) 
+function getUser ($BenNickname)
+{
+  //Tabelle auselsen
+  global $db;
+  $sql = "SELECT BenutzerId,BenNickname,BenPasswort FROM tbenutzer WHERE BenNickname = '$BenNickname';";
+  $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
+  $user = mysqli_fetch_assoc($result);
+  return $user;
+}
+function login($user, $password)
+{
+  if($user['BenPasswort']=hashpw($password))
+}
+
+function DatenAuslesen ($BenutzerId)
 {
   //Tabelle auselsen
   global $db;
