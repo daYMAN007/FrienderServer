@@ -48,7 +48,6 @@ function DatenAuslesen ()
   while ($row = $result->fetch_assoc()){
    $userarr[]=$row;
   }
-
   echo json_encode($userarr);
 }
 

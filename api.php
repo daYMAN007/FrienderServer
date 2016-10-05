@@ -1,7 +1,6 @@
 <?php
 require_once 'libary.php'; //todo pw dont work at all
 $myData = json_decode($_POST['myData'],true);
-// $myData = array('action' => "Registrieren", 'BenPasswort' => "geheim", 'Benutzername' => "asdf", 'BenVorname' => "asdfasdf", 'BenNachname' => "Halsdjf", 'BenTelefonnummer' => "076 567 22 91");
 $action = $myData['action'];
 //Überprüfen, ob die eingegebenen Daten richtig sind
 switch ($action){
@@ -40,4 +39,14 @@ switch ($action){
         echo "2";
       }
       break;
+
+      case "DatenAuslesen":
+      DatenAuslesen();
+      if ($userarr == null)
+      {
+        echo "0";
+      }
+      else {
+        echo "1";
+      }
 }
