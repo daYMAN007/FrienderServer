@@ -1,32 +1,34 @@
 <?php
 require_once 'libary.php'; //todo pw dont work at all
-$action = $_POST['action'];
+$myData = json_decode($_POST['myData'],true);
+print_r($myData);
+$action = $myData['action'];
 
 switch ($action){
       case "Registrieren":
-      $BenPasswort=hashpw($_POST['BenPasswort']);
-      $Benutzername=$_POST['Benutzername'];
-      $BenVorname=$_POST['BenVorname'];
-      $BenNachname=$_POST['BenNachname'];
-      $BenTelefonnummer=$_POST['BenTelefonnummer'];
-      $BenLongitude=$_POST['BenLongitude'];
-      $BenLatitude=$_POST['BenLatitude'];
-      $BenGeoTime=$_POST['BenGeoTime'];
+      $BenPasswort=hashpw($myData['BenPasswort']);
+      $Benutzername=$myData['Benutzername'];
+      $BenVorname=$myData['BenVorname'];
+      $BenNachname=$myData['BenNachname'];
+      $BenTelefonnummer=$myData['BenTelefonnummer'];
+      $BenLongitude=$myData['BenLongitude'];
+      $BenLatitude=$myData['BenLatitude'];
+      $BenGeoTime=$myData['BenGeoTime'];
       Registrieren($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort);
       break;
 
       case "Login":
-      $user= getUser($_POST['Benutzername']);
+      $user= getUser($myData['Benutzername']);
       if($user==null)
       {
-        echo "User nicht gefunden";
+        echo "0";
       }
-      else if(login($user,$_POST['BenPasswort']))
+      else if(login($user,$myData['BenPasswort']))
       {
-        echo "Login erfolgreich";
+        echo "1";
       }
       else {
-        echo "Falsches PW";
+        echo "2";
       }
       break;
 }
