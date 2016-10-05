@@ -1,6 +1,22 @@
 <?php
-require_once 'libary.php';
+require_once 'libary.php'; //todo pw dont work at all
 $action = $_POST['action'];
+
+  $user= getUser("CHEf");
+if($user==null)//fck this
+{
+  print_r($user);
+  echo "User nicht gefunden";
+}
+else if(login($user,"geheim"))
+{
+  echo "Login erfolgreich";
+}
+else {
+  echo "Falsches PW";
+}
+print_r($user);
+print_r(hashpw("geheidsfsfdfsfsfm"));
 
 switch ($action){
       case "Registrieren":
@@ -16,12 +32,12 @@ switch ($action){
       break;
 
       case "Login":
-      $user= getUser($_POST['Benutzername'])
+      $user= getUser($_POST['Benutzername']);
       if($user==null)
       {
-        echo "user nicht gefunden";
+        echo "User nicht gefunden";
       }
-      if(login($user,$_POST['BenPasswort']))
+      else if(login($user,$_POST['BenPasswort']))
       {
         echo "Login erfolgreich";
       }

@@ -14,8 +14,8 @@ $sql = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
 function hashpw($password)
 {
   $salt="dsfsf";
-  $pwsaltedmd5 md5 ("rasmuslerdorf".$salt)."\n";
-  return sha($pwsaltedmd5);
+  $pwsaltedmd5 =md5 ("rasmuslerdorf".$salt)."\n";
+  return $pwsaltedmd5 ;
 
 }
 // Daten auslesen
@@ -30,7 +30,9 @@ function getUser ($BenNickname)
 }
 function login($user, $password)
 {
-  if($user['BenPasswort']=hashpw($password))
+return $user['BenPasswort']==hashpw($password);
+
+
 }
 
 function DatenAuslesen ($BenutzerId)
