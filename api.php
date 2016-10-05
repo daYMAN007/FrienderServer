@@ -2,22 +2,6 @@
 require_once 'libary.php'; //todo pw dont work at all
 $action = $_POST['action'];
 
-  $user= getUser("CHEf");
-if($user==null)//fck this
-{
-  print_r($user);
-  echo "User nicht gefunden";
-}
-else if(login($user,"geheim"))
-{
-  echo "Login erfolgreich";
-}
-else {
-  echo "Falsches PW";
-}
-print_r($user);
-print_r(hashpw("geheidsfsfdfsfsfm"));
-
 switch ($action){
       case "Registrieren":
       $BenPasswort=hashpw($_POST['BenPasswort']);

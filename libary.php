@@ -14,8 +14,9 @@ $sql = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
 function hashpw($password)
 {
   $salt="dsfsf";
-  $pwsaltedmd5 =md5 ("rasmuslerdorf".$salt)."\n";
-  return $pwsaltedmd5 ;
+  $pwsaltedmd5 =md5 ($password.$salt);
+
+  return sha1($pwsaltedmd5) ;
 
 }
 // Daten auslesen
