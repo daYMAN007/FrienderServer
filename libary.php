@@ -3,6 +3,7 @@
 require_once 'dbconnect.php';
 mysqli_set_charset($db, 'utf8'); //nöd nötig wen nix mb4 (https://forums.digitalpoint.com/threads/mysql-collation-utf8-differences.2721197/)
 
+DatenAuslesen();
 // Daten einfügen
 function Registrieren ($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenPasswort)
 {
@@ -19,7 +20,7 @@ function hashpw($password)
   return sha1($pwsaltedmd5) ;
 
 }
-// Daten auslesen
+// Benutzerdaten auslesen
 function getUser ($BenNickname)
 {
   //Tabelle auselsen
@@ -36,22 +37,19 @@ function login($user, $password)
 return $user['BenPasswort']==hashpw($password);
 }
 
-function DatenAuslesen ($BenutzerId)
+// Datenauslesen
+function DatenAuslesen ()
 {
   //Tabelle auselsen
   global $db;
-  $sql = "SELECT * FROM tbenutzer WHERE BenutzerId = '$BenutzerId';";
+  $sql = "SELECT BenutzerId, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime FROM tbenutzer;";
   $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
-  $user = mysqli_fetch_assoc($result);
-  $BenutzerId = $user['BenutzerId'];
-  $Benutzername = $user['BenNickname'];
-  $BenVorname = $user['BenVorname'];
-  $BenNachname = $user['BenNachname'];
-  $BenTelefonnummer = $user['BenTelefonnummer'];
-  $BenLongitude = $user['BenLongitude'];
-  $BenLatitude = $user['BenLatitude'];
-  $BenGeoTime = $user['BenGeoTime'];
-  $BenPasswort = $user['BenPasswort'];
+  $userarr = [];
+  while ($row = $result->fetch_assoc()){
+   $userarr[]=$row;
+  }
+
+  echo json_encode($userarr);
 }
 
 
