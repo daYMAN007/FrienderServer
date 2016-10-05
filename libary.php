@@ -29,11 +29,11 @@ function getUser ($BenNickname)
   $user = mysqli_fetch_assoc($result);
   return $user;
 }
+
+//Login
 function login($user, $password)
 {
 return $user['BenPasswort']==hashpw($password);
-
-
 }
 
 function DatenAuslesen ($BenutzerId)
@@ -54,17 +54,22 @@ function DatenAuslesen ($BenutzerId)
   $BenPasswort = $user['BenPasswort'];
 }
 
+//Select um zu sehen, ob der Benutzername schon existiert
+function BenutzernameTesten ($Benutzername)
+{
+  global $db
+  $sql = "SELECT * FROM tbenutzer WHERE BenutzerName = '$BenutzerName';";
+  $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
+  $user = mysqli_fetch_assoc($result);
+  return($user);
+}
+
+
 // Daten aktualisieren
 function PositionUpdate($BenutzerId, $Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort) //name gänderet
 {
-
-//Charset definieren
-//mysqli_set_charset($db, 'utf8mb4'); //REDUNDANT
 
 //Tabelle updaten
 $sql = "UPDATE tbenutzer set (BenLongitude, BenLatitude, BenGeoTime) VALUES ('$BenLongitude', '$BenLatitude', '$BenGeoTime') where BenutzerId = '$BenutzerId';";
 $sql = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db)); //maybe bessere name für variable? well du chunsch kei sql über maybe $reponse or sth like this
 }
-
-//To do
-//-Datenüberprüfung,

@@ -4,17 +4,28 @@ $myData = json_decode($_POST['myData'],true);
 print_r($myData);
 $action = $myData['action'];
 
+//Überprüfen, ob die eingegebenen Daten richtig sind
 switch ($action){
       case "Registrieren":
       $BenPasswort=hashpw($myData['BenPasswort']);
+      $BenPasswort=hashpw($myData['BenPasswortWiederholung'])
       $Benutzername=$myData['Benutzername'];
       $BenVorname=$myData['BenVorname'];
       $BenNachname=$myData['BenNachname'];
       $BenTelefonnummer=$myData['BenTelefonnummer'];
-      $BenLongitude=$myData['BenLongitude'];
-      $BenLatitude=$myData['BenLatitude'];
-      $BenGeoTime=$myData['BenGeoTime'];
-      Registrieren($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort);
+      Registrieren($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenPasswort);
+      $user = getUser($myData['Benutzername']);
+      if($user == null)
+      {
+        echo "0";
+      }
+      else if($BenVorname == null || $BenNachname ==  null || $BenTelefonnummer == null || $BenPasswort == null || $BenPasswortWiederholung == null)
+      {
+        echo "1";
+      }
+      else {
+        echo "2";
+      }
       break;
 
       case "Login":
