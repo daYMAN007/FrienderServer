@@ -3,7 +3,6 @@
 require_once 'dbconnect.php';
 mysqli_set_charset($db, 'utf8'); //nöd nötig wen nix mb4 (https://forums.digitalpoint.com/threads/mysql-collation-utf8-differences.2721197/)
 
-DatenAuslesen();
 // Daten einfügen
 function Registrieren ($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenPasswort)
 {
@@ -41,6 +40,7 @@ return $user['BenPasswort']==hashpw($password);
 function DatenAuslesen ()
 {
   //Tabelle auselsen
+
   global $db;
   $sql = "SELECT BenutzerId, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime FROM tbenutzer;";
   $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
@@ -48,7 +48,8 @@ function DatenAuslesen ()
   while ($row = $result->fetch_assoc()){
    $userarr[]=$row;
   }
-  echo json_encode($userarr);
+    echo json_encode($userarr);
+  //  print_r($userarr);
 }
 
 

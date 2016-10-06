@@ -41,12 +41,7 @@ switch ($action){
       break;
 
       case "DatenAuslesen":
-      DatenAuslesen();
-      if ($userarr == null)
-      {
-        echo "0";
-      }
-      else {
-        echo "1";
-      }
+      DatenAuslesen(); //todo gebe BenutzerId mit filter
+
+
 }
