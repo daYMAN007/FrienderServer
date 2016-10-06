@@ -54,10 +54,10 @@ function DatenAuslesen ()
 
 
 // Daten aktualisieren
-function PositionUpdate($BenutzerId, $Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenLongitude, $BenLatitude, $BenGeoTime, $BenPasswort) //name gänderet
+function PositionUpdate($BenutzerId,$BenLongitude, $BenLatitude)
 {
-
+global $db;
 //Tabelle updaten
-$sql = "UPDATE tbenutzer set (BenLongitude, BenLatitude, BenGeoTime) VALUES ('$BenLongitude', '$BenLatitude', '$BenGeoTime') where BenutzerId = '$BenutzerId';";
-$sql = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db)); //maybe bessere name für variable? well du chunsch kei sql über maybe $reponse or sth like this
+$sql = "UPDATE tbenutzer set BenLongitude=$BenLongitude, BenLatitude=$BenLatitude, BenGeoTime=now() where BenutzerId = '$BenutzerId';";
+mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
 }

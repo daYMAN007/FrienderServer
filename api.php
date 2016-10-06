@@ -10,18 +10,20 @@ switch ($action){
       $BenVorname=$myData['BenVorname'];
       $BenNachname=$myData['BenNachname'];
       $BenTelefonnummer=$myData['BenTelefonnummer'];
-      Registrieren($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenPasswort);
       $user = getUser($myData['Benutzername']);
       if($user == null)
       {
-        echo "0";
+        Registrieren($Benutzername, $BenVorname, $BenNachname, $BenTelefonnummer, $BenPasswort);
+        $user= getUser($Benutzername);
+        echo "0;".$user['BenutzerId'];
       }
-      else if($BenVorname == null || $BenNachname ==  null || $BenTelefonnummer == null || $BenPasswort == null)
+      else if($BenVorname != null || $BenNachname !=  null || $BenTelefonnummer != null || $BenPasswort != null)
       {
         echo "1";
       }
       else {
-        echo "2";
+
+          echo "unkown error";
       }
       break;
 
@@ -33,7 +35,8 @@ switch ($action){
       }
       else if(login($user,$myData['BenPasswort']))
       {
-        echo "1";
+        echo "1;".$user['BenutzerId'];
+
       }
       else {
         echo "2";
@@ -41,7 +44,22 @@ switch ($action){
       break;
 
       case "DatenAuslesen":
-      DatenAuslesen(); //todo gebe BenutzerId mit filter
+      DatenAuslesen(); //todo gebe BenutzerId mit filter für eigene ID
+      break;
 
+      case "SaveGeoData":
+      $user= getUser($myData['Benutzername']);
+      if($user==null)
+      {
+        echo "0";
+      }
+      else if(login($user,$myData['BenPasswort']))
+      {
+        PositionUpdate($user['BenutzerId'],$myData['BenLongitude'],$myData['BenLatitude']);
+      }
+      else {
+        echo "2";
+      }
+      break;
 
 }

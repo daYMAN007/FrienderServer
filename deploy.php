@@ -1,4 +1,6 @@
 <?php
+//script zum erstellen der DB bitte Settings zu erst bearbeiten
+
 require_once 'settings.php';
 
 $sql='CREATE TABLE IF NOT EXISTS TBenutzer(
