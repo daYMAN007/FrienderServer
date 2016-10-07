@@ -37,19 +37,17 @@ return $user['BenPasswort']==hashpw($password);
 }
 
 // Datenauslesen
-function DatenAuslesen ()
+function DatenAuslesen ($BenutzerId,  $sql)
 {
   //Tabelle auselsen
 
   global $db;
-  $sql = "SELECT BenutzerId, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime FROM tbenutzer;";
   $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
   $userarr = [];
   while ($row = $result->fetch_assoc()){
    $userarr[]=$row;
   }
     echo json_encode($userarr);
-  //  print_r($userarr);
 }
 
 

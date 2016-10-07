@@ -44,8 +44,16 @@ switch ($action){
       break;
 
       case "DatenAuslesen":
-      DatenAuslesen(); //todo gebe BenutzerId mit filter für eigene ID
+      $BenutzerId = ($myData['BenutzerId']);
+      $sql = "SELECT BenutzerId, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime FROM tbenutzer where BenutzerId != $BenutzerId;";
+      DatenAuslesen($BenutzerId, $sql); //todo gebe BenutzerId mit filter für eigene ID
       break;
+
+      /*case "DatenAuslesen2":
+     $BenutzerId = ($myData['BenutzerId']);
+     $sql = "SELECT BenutzerId, Benutzername, BenVorname, BenNachname, BenTelefonnummer, BenPasswort FROM tbenutzer where BenutzerId = $BenutzerId;";
+     DatenAuslesen($BenutzerId, $sql);
+     //break;*/
 
       case "SaveGeoData":
       $user= getUser($myData['Benutzername']);
