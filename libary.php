@@ -47,15 +47,49 @@ function DatenAuslesen ($BenutzerId,  $sql)
   while ($row = $result->fetch_assoc()){
    $userarr[]=$row;
   }
-    echo json_encode($userarr);
+    return json_encode($userarr);
+}
+function isOnlineDatenAuslesen ($BenutzerId,  $sql)
+{
+  //Tabelle auselsen
+  global $db;
+  $sqb="select now()";
+    $result = mysqli_query($db,$sqb ) or die ("Error message: " . mysqli_error($db));
+    $row = $result->fetch_assoc();
+    $nowsql=$row['now()'];
+  $result = mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
+  $userarr = [];
+  while ($row = $result->fetch_assoc()){
+    $now = strtotime($nowsql);
+ $target = strtotime($row['BenGeoTime']);
+ $diff = $now - $target;
+
+//15 minuten 15*60 = 900
+ if ($diff <= 900) {
+   $row['isOnline']=true;
+ } else {
+   $row['isOnline']=false;
+}
+  $userarr[]=$row;
+  }
+    return json_encode($userarr);
 }
 
-
-// Daten aktualisieren
+// PosDaten aktualisieren
 function PositionUpdate($BenutzerId,$BenLongitude, $BenLatitude)
 {
 global $db;
 //Tabelle updaten
 $sql = "UPDATE tbenutzer set BenLongitude=$BenLongitude, BenLatitude=$BenLatitude, BenGeoTime=now() where BenutzerId = '$BenutzerId';";
 mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
+}
+
+// Einstellungs änderung:
+function Userupdate($BenutzerId,$Benutzername,$BenPasswort,$BenTelefonnummer,$BenVorname,$BenNachname)
+{
+  global $db;
+  $sql = "update tbenutzer set BenNickname='$Benutzername', BenVorname='$BenVorname',BenNachname='$BenNachname',BenTelefonnummer='$BenTelefonnummer',BenPasswort='$BenPasswort' where BenutzerId = '$BenutzerId'; ";
+echo $sql;
+  mysqli_query($db, $sql) or die ("Error message: " . mysqli_error($db));
+
 }

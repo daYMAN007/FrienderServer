@@ -43,17 +43,18 @@ switch ($action){
       }
       break;
 
-      case "DatenAuslesen":
+      case "DataList": //liste für sidebar auslesen
       $BenutzerId = ($myData['BenutzerId']);
       $sql = "SELECT BenutzerId, BenVorname, BenNachname, BenTelefonnummer, BenLongitude, BenLatitude, BenGeoTime FROM tbenutzer where BenutzerId != $BenutzerId;";
-      DatenAuslesen($BenutzerId, $sql); //todo gebe BenutzerId mit filter für eigene ID
+       echo isOnlineDatenAuslesen($BenutzerId, $sql);
+
       break;
 
-      /*case "DatenAuslesen2":
+      case "UpdateEinstellungen": //Einstellungs Daten auslesen
      $BenutzerId = ($myData['BenutzerId']);
-     $sql = "SELECT BenutzerId, Benutzername, BenVorname, BenNachname, BenTelefonnummer, BenPasswort FROM tbenutzer where BenutzerId = $BenutzerId;";
-     DatenAuslesen($BenutzerId, $sql);
-     //break;*/
+     $sql = "SELECT BenutzerId, BenNickname, BenVorname, BenNachname, BenTelefonnummer FROM tbenutzer where BenutzerId = $BenutzerId;";
+      echo DatenAuslesen($BenutzerId, $sql);
+     break;
 
       case "SaveGeoData":
       $user= getUser($myData['Benutzername']);
@@ -68,6 +69,16 @@ switch ($action){
       else {
         echo "2";
       }
+      break;
+
+      case "Updaten":
+      $BenPasswort=hashpw($myData['BenPasswort']);
+      $Benutzername=$myData['Benutzername'];
+      $BenVorname=$myData['BenVorname'];
+      $BenNachname=$myData['BenNachname'];
+      $BenTelefonnummer=$myData['BenTelefonnummer'];
+      $BenutzerId = ($myData['BenutzerId']);
+        Userupdate($BenutzerId,$Benutzername,$BenPasswort,$BenTelefonnummer,$BenVorname,$BenNachname);
       break;
 
 }
